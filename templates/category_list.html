@@ -1,0 +1,31 @@
+<!-- templates/article_list.html object_list -->
+{% extends 'base.html' %}
+
+
+{% block title %} Region liste
+
+{% endblock title %}
+
+
+{% block content %}
+
+<h1>Author List</h1>
+
+{% if category_list %}
+  <ul>
+
+  {% for category in category_list %}
+    <li>
+      <a href="{{ category.get_absolute_url }}">
+      {{ category }} 
+      </a>
+    </li>
+  {% endfor %}
+
+ </ul>
+{% else %}
+  <p>There are no category available.</p>
+{% endif %}
+
+        
+{% endblock %}

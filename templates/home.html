@@ -1,0 +1,47 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+{% block title %} - Home {% endblock title %}
+
+
+{% block content %}   
+
+
+<div class="row">
+
+  <div class="col-sm mb-5">
+    <h1 class="newH1">Vins & Cépages</h1>
+    <h2 class="mt-4"><em><b>Le vin a de l'esprit !</b></em></h2>    
+  </div>
+
+  <div class="col-sm">
+      <h2 class="home-bg">Tous les vins</h2>
+        <p><b>Accedez à la liste complete des vins du site "Vin & Cépage" </b> </p>
+        <p><a class="btn btn-outline-secondary" href="{% url 'vins:vin_list' %}"
+            role="button">Liste des vins</a></p>         
+  </div>
+    
+
+  <div class="col-sm">
+        <h2 class="Ital-Play-Font">Derniers vins…</h2>
+        {% if images %}
+        <div id="my_rotator" >
+            {% for vin in images %}
+            <figure>
+                <img src="https://res.cloudinary.com/lvcloud/image/upload/v1624885333/{{ vin.image }}" alt="{{ vin.title }}" class="myImages borderImage" height="300" />
+                <figcaption class="figure-caption" ><b> <a href="{{ vin.get_absolute_url }}" >{{ vin.title }} </a></b></figcaption>
+            </figure>          
+        {% endfor %}
+        </div>
+        {% endif %}
+  </div>
+      
+  <div class="col-sm col-sm-3">
+        <h2>Tendances <br>Vin & Cépage</h2>
+        <a class="twitter-timeline" href="https://twitter.com/CepageVin?ref_src=twsrc%5Etfw">Tweets by CepageVin</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+</div><!-- END ROW -->
+
+
+
+{% endblock content %}

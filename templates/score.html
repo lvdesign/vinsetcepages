@@ -1,0 +1,47 @@
+{% if  vin_list_score  %} 
+    {% for vin in vin_list_score  %}
+        {% if vin.score == 1 %}
+                <p class="fond-blanc-bg" >
+                    <b>Score:  {{ vin.id }}</b>
+                    <i class="fa fa-glass" aria-hidden="true"></i></p>
+                {% elif vin.score == 2 %}    
+                <p class="fond-blanc-bg" >
+                    <b>Score:  {{ vin.id }}</b> 
+                    <i class="fa fa-glass" aria-hidden="true"></i>
+                    <i class="fa fa-glass" aria-hidden="true"></i>
+                </p>
+                {% elif vin.score == 3 %}    
+                <p class="fond-blanc-bg" >
+                    <b>Score:  </b>
+                    <i class="fa fa-glass" aria-hidden="true"></i>
+                    <i class="fa fa-glass" aria-hidden="true"></i>
+                    <i class="fa fa-glass" aria-hidden="true"></i>
+                </p>
+                {% elif vin.score == 4 %}    
+                <p class="fond-blanc-bg" >
+                    <b>Score:  </b>
+                    <i class="fa fa-glass" aria-hidden="true"></i>
+                    <i class="fa fa-glass" aria-hidden="true"></i>
+                    <i class="fa fa-glass" aria-hidden="true"></i>
+                    <i class="fa fa-glass" aria-hidden="true"></i>
+                </p>
+                {% elif vin.score == 5 %}    
+                <p class="fond-blanc-bg" >
+                    <b>Score:  {{ vin.id }}</b>  
+                    <i class="fa fa-glass" aria-hidden="true"></i>
+                    <i class="fa fa-glass" aria-hidden="true"></i>
+                    <i class="fa fa-glass" aria-hidden="true"></i>
+                    <i class="fa fa-glass" aria-hidden="true"></i>
+                    <i class="fa fa-glass" aria-hidden="true"></i>
+                </p>
+                {% else %}
+                <p class="fond-blanc-bg" >
+                    <b>Score:</b> 
+                    {{ vin.score }} 
+                    <i class="fa fa-glass" aria-hidden="true"></i>
+                </p>
+        {% endif %}
+    {% endfor %}
+    {% else %}
+        <p><strong>There are no Score present.</strong></p>       
+{% endif %}

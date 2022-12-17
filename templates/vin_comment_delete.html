@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Vin-Comment Delete{% endblock title %}
+
+{% block content %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+<div class="row">
+    <div class="col">
+        <h2>Delete Comment</h2>
+        <p>Are you sure you want to delete this comment</p>
+        <p><b>{{ comment.text }} ?</b></p>
+
+        <form action="" method="POST" >
+        {% csrf_token %}
+        <input type="submit"  class="btn btn-primary" value="Yes, delete.">
+        <a href="{% url 'vins:vin_detail' comment.vin.slug %}" class="btn btn-secondary">Cancel</a>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

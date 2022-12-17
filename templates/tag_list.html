@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Cépages{% endblock title %}
+{% block content %}
+
+
+
+{% if tag_list %}
+
+<div class="card">    
+    {% for tag in tag_list %}
+    <div class="card-body">
+        <p>{{ tag.name }}</p>
+    </div>  
+    {% endfor %} 
+    
+<li><strong>Nombre de tag:</strong> {{ tagsall }} </li>
+    
+</div>
+
+
+{% else %}
+<!-- si error -->
+<div class="col-xs-6 col-lg-4">
+  <p>There are no Vins in the database.</p>
+</div>
+<!-- End- vinList -->
+{% endif %}
+<!-- ENDIF IfvinList END -->
+
+
+<script>
+    function favPost(url, vin_id) {
+        console.log('Requesting JSON');
+        $.post(url, {},  function(rowz){
+            console.log(url, 'finished');
+            $("#unfavorite_heart_"+vin_id).toggle();
+            $("#favorite_heart_"+vin_id).toggle();
+        }).fail(function(xhr) {
+            alert('Url failed with '+xhr.status+' '+url);
+        });
+    }
+    </script>
+
+    {% endblock content %}

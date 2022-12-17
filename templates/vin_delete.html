@@ -1,0 +1,18 @@
+<!-- templates/article_delete.html -->
+{% extends 'base.html' %}
+
+{% block title %}Vin-Delete{% endblock title %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="row">
+    <div class="col">
+    <h2>Delete</h2>
+
+    <form action="" method="post">{% csrf_token %}
+    <p>Are you sure you want to delete "{{ vin.title }}"?</p>
+    <button class="btn btn-danger ml-2" type="submit">Confirm</button>
+    </form>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,21 @@
+{% if user.is_authenticated %}
+
+<a href="#" onclick="favPost('{% url 'vins:vin_unfavorite' vin.id %}', {{vin.id}} );return false;"
+    {% if vin.id not in favorites %} style="display: none;" {% endif %} 
+    id="favorite_heart_{{vin.id}}">
+    <span class="fa-stack" style="vertical-align: middle;">
+        <i class="fa fa-heart fa-stack-1x" style="color: rgb(255, 0, 0);"></i>
+        <i class="fa fa-heart-o fa-stack-1x"></i>
+    </span>
+</a>
+
+<a href="#" onclick="favPost('{% url 'vins:vin_favorite' vin.id %}', {{vin.id}} );return false;" 
+    {% if vin.id in favorites %} style="display: none;" 
+    id="unfavorite_heart_{{vin.id}}">
+    <span class="fa-stack" style="vertical-align: middle;">
+        <i class="fa fa-heart fa-stack-1x" style="display: none; color: rgb(255, 0, 0);"></i>
+        <i class="fa fa-heart-o fa-stack-1x"></i>
+    </span>
+</a>
+{% endif %}
+<!--<i class="far fa-heart"></i> -->

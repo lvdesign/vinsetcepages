@@ -1,0 +1,16 @@
+<!-- templates/article_new.html -->
+{% extends 'base.html' %}
+{% block title %}Vin-New{% endblock title %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="row">
+    <div class="col">
+        <h2>Nouveau Vin</h2>
+        <form  action="" method="post" enctype="multipart/form-data" >{% csrf_token %}
+        {{ form|crispy }}
+        <button class="btn btn-success" type="submit">Sauvegarder</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}

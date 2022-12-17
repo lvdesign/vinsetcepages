@@ -1,0 +1,167 @@
+<!-- templates/article_list.html 
+
+object_list -->
+{% extends 'base.html' %}
+
+{% block title %}Liste des Vins{% endblock title %}
+
+{% block content %}
+
+<div class="row align-items-start">
+   
+    {% if vin_list %} 
+    {% for vin in vin_list %}
+
+   <!--   col-mb-4  
+col-auto mb-3
+col-6 col-md-4-->
+    <div class="col-auto col-md-4 mb-5"><!--    mb-4 -->
+      
+        
+            <div class="card-body">                
+                <a href="{{ vin.get_absolute_url }}">
+                        <img src="https://res.cloudinary.com/lvcloud/image/upload/v1624885333/{{ vin.image }}" 
+                        alt="{{ vin.title }}"
+                        width=300 height=300           
+                        class="myImages img-fluid mx-auto d-block borderImage"
+                        />       
+                        <h5 class="mt-0 fond-blanc-bg fond-title-padding">
+                            {{ vin.title }} 
+                        </h5>
+                </a>
+               
+                <p></p>
+                <span class="fond-noir-bg fond-padding">
+                    by {{ vin.author }} | {{ vin.created | date }}</span>
+                <p></p>
+                <p class="fond-noir-bg fond-padding"><b>Région : </b> <a class="fond-blanc-bg" href="{% url 'vins:category_detail' vin.category %}"> {{ vin.category | capfirst }} </a></p>              
+                <p></p>                
+                <ul class="fond-blanc-bg fond-padding" >
+                    <li class="fond-noir-bg"><b>Cépage : </b></li>
+                    {% for t in vin.tag.all %}
+                    <li class="fond-blanc-bg fond-padding" > <a href="{% url 'vins:tag_detail' t.slug %}"> #{{ t.name | capfirst }}  </a> </li>     
+                    {% if not foorloop.last%}{% endif %}
+                    {% endfor %}
+                </ul>
+                <p></p>
+                <p class="fond-noir-bg fond-padding" ><b>Prix : </b> {{ vin.price }} €</p>
+                <p></p>
+                <p class="fond-noir-bg fond-padding"><b>Boutique : </b>{{ vin.boutique }}</p>
+                <p></p> 
+                <!-- score -->
+                {% if vin.score == 1 %}
+                <p class="fond-blanc-bg fond-padding" >
+                    <b>Like :  </b>
+                    <i class="fa fa-glass" aria-hidden="true"></i></p>
+                {% elif vin.score == 2 %}    
+                <p class="fond-blanc-bg fond-padding" >
+                    <b>Like :  </b> 
+                    <i class="fa fa-glass" aria-hidden="true"></i>
+                    <i class="fa fa-glass" aria-hidden="true"></i>
+                </p>
+                {% elif vin.score == 3 %}    
+                <p class="fond-blanc-bg fond-padding" >
+                    <b>Like :  </b>
+                    <i class="fa fa-glass " aria-hidden="true"></i>
+                    <i class="fa fa-glass " aria-hidden="true"></i>
+                    <i class="fa fa-glass " aria-hidden="true"></i>
+                </p>
+                {% elif vin.score == 4 %}    
+                <p class="fond-blanc-bg fond-padding" >
+                    <b>Like :  </b>
+                    <i class="fa fa-glass " aria-hidden="true"></i>
+                    <i class="fa fa-glass " aria-hidden="true"></i>
+                    <i class="fa fa-glass " aria-hidden="true"></i>
+                    <i class="fa fa-glass " aria-hidden="true"></i>
+                </p>
+                {% elif vin.score == 5 %}    
+                <p class="fond-blanc-bg fond-padding" >
+                    <b>Like :  </b>  
+                    <i class="fa fa-glass" aria-hidden="true"></i>
+                    <i class="fa fa-glass" aria-hidden="true"></i>
+                    <i class="fa fa-glass" aria-hidden="true"></i>
+                    <i class="fa fa-glass" aria-hidden="true"></i>
+                    <i class="fa fa-glass" aria-hidden="true"></i>
+                </p>
+                {% else %}
+                <p class="fond-blanc-bg fond-padding" ><b>Like :  </b> {{ vin.score }} <i class="fa fa-glass" aria-hidden="true"></i></p>
+                {% endif %}
+
+           
+
+            
+            {% if vin.author == user %}
+            <!-- auteur -->
+            <hr>
+            <p>
+                <a href="{% url 'vins:vin_edit' vin.slug %}">Edit</a> |
+                <a href="{% url 'vins:vin_delete' vin.slug %}">Delete</a>  
+            </p>
+            <hr>
+            {% endif %}
+
+            {% if user.is_authenticated %}
+            <p></p>
+
+            <p class="Ital-Play-Font fond-blanc-bg fond-padding">vin favori ?
+             <!-- user -->
+            <a href="#" onclick="favPost('{% url 'vins:vin_unfavorite' vin.id %}', {{vin.id}} );return false;" 
+                {% if vin.id not in favorites %} style="display: none;" {% endif %}  id="favorite_heart_{{vin.id}}">            
+                <span class="fa-stack" style="vertical-align: middle;">
+                    <i class="fa fa-heart fa-stack-1x" style="color: rgb(255, 0, 0);"></i>
+                    <i class="fa fa-heart-o fa-stack-1x"></i>                
+                </span>
+            </a>
+
+            <a href="#" onclick="favPost('{% url 'vins:vin_favorite' vin.id %}', {{vin.id}} );return false;"
+            {% if vin.id in favorites %} style="display: none;" {% endif %}  id="unfavorite_heart_{{vin.id}}">
+                <span class="fa-stack" style="vertical-align: middle;">
+                    <i class="fa fa-heart fa-stack-1x myheart" style="display: none; color: rgb(255, 0, 0);"></i>
+                    <i class="fa fa-heart-o fa-stack-1x"></i>
+                </span>
+            </a>
+            </p>
+            {% endif %}
+            <p></p>
+            <p>
+                <a href="{{ vin.get_absolute_url }}" class="btn btn-light">plus de détails</a>
+            </p>
+           
+           
+            
+            </div><!-- End CardBody -->
+        
+                      
+   
+
+    </div> <!-- End col-mb-4--> 
+    
+    {% endfor %} 
+<!-- AVANT si error -->
+{% else %}
+<!-- si error -->
+<div class="col-mb-4"><p>ERROR pas de vins!!!</p></div>
+<!-- End- vinList -->
+{% endif %}
+<!-- ENDIF IfvinList END -->
+
+
+<script>
+    function favPost(url, vin_id) {
+        console.log('Requesting JSON');
+        $.post(url, {},  function(rowz){
+            console.log(url, 'finished');
+            $("#unfavorite_heart_"+vin_id).toggle();
+            $("#favorite_heart_"+vin_id).toggle();
+        }).fail(function(xhr) {
+            alert('Url failed with '+xhr.status+' '+url);
+        });
+    }
+</script>
+
+
+
+</div><!-- END ROW -->
+
+
+{% endblock content %}

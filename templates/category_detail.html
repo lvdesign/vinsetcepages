@@ -1,0 +1,48 @@
+<!-- templates/article_list.html object_list -->
+{% extends 'base.html' %}
+{% load static %} 
+
+{% block title %} La région {{ category.name | upper }}
+
+{% endblock title %}
+
+
+{% block content %}
+  
+
+  <div class="col-md-9 px-0">
+    <h5 class="mb-0"><b>La région</b></h5>    
+    <h1 class="display-1 font-italic mt-0 overF">{{ category.name | capfirst  }} </h1>
+    <p class="lead my-3 fond-blanc-bg">{{ category.description_cat | safe }}</p>
+  </div>
+
+
+<!-- liste des vins  par cat -->
+<div class="category-entry mt-4"> 
+  <h5><b>Les vins du sites :</b></h5>
+        <div class="row">          
+          {% for cat in category.categories.all %}  
+          <div class="col-sm media mb-3"> 
+            <img class="align-self-start mr-2 myImages" src="https://res.cloudinary.com/lvcloud/image/upload/v1624885333/{{ cat.image }}" alt="" width=50 >
+
+            <h3 property="v:name" class="entry-title fn fond-blanc-bg"> <a href="{%  url 'vins:vin_detail' cat.slug %}">{{ cat.slug}}</a></h3>        
+          </div>
+          {% if not foorloop.last%}{% endif %}
+          {% endfor %}    
+      </div>
+</div>
+
+<!-- categories liste -->
+{% load vins_plus %}
+<div class="list-group category mt-4">
+  <h5><b>Liste des categories :</b></h5>
+    {% get_category_list %} 
+</div>
+
+
+<!-- Retour liste -->    
+<div class="mt-4">
+    <a href="{% url 'vins:vin_list' %}" class="btn btn-light"> Retour aux vins </a>
+</div>
+
+{% endblock %}
