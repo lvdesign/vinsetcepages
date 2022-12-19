@@ -5,6 +5,7 @@ cloudinary==1.30.0
 Django==4.1.4
 django-cloudinary-storage==0.3.0
 django-crispy-forms==1.14.0
+django-resized==1.0.2
 django_debug_toolbar==3.8.1
 idna==3.4
 Pillow==9.3.0

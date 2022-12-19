@@ -1,4 +1,9 @@
 console.log('heello');
+
+/*
+}
+var ladate = Date.now();
+document.getElementById('mydate').innerHTML = ladate;
 /*
 // voir aussi https://www.a11ymatters.com/pattern/mobile-nav/
 // Nav action

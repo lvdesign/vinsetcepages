@@ -1,10 +1,6 @@
 body {
     padding-top: 5rem;
   }
-        
-.vin-template {
-    padding: 3rem 1.5rem;  
-  }
 
 /* FONT - Typographie
 Oswald:wght@700&
@@ -14,6 +10,15 @@ font-family: 'Oswald', sans-serif
 font-family: 'Roboto', sans-serif;
 font-family: 'Playfair Display', serif;
 */
+
+/* LAYOUT */
+
+
+.vin-template {
+    padding: 3rem 1.5rem;  
+  }
+
+
 .bg-white{
   color:white;
 }
