@@ -40,13 +40,7 @@ AUTH_USER_MODEL = 'accounts.CustomUser'  # new
 CRISPY_TEMPLATE_PACK = "bootstrap4" 
 # Application definition
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'lvcloud',
-    'API_KEY': '144646879732624',
-    'API_SECRET': 'jAdj2Wc2Qb6fmJfY9qJXdEMUYSw',
-    'API_PROXY': 'http://proxy.server:3128',
-}
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -56,6 +50,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'django.contrib.humanize',
+    'cloudinary_storage',
     # thirdparty
     "debug_toolbar",
     'cloudinary',
@@ -66,6 +61,14 @@ INSTALLED_APPS = [
     "pages",
     "vins",
 ]
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'lvcloud',
+    'API_KEY': '144646879732624',
+    'API_SECRET': 'jAdj2Wc2Qb6fmJfY9qJXdEMUYSw',
+    'API_PROXY': 'http://proxy.server:3128',
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
