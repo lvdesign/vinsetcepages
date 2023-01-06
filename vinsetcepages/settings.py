@@ -44,6 +44,7 @@ CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'lvcloud',
     'API_KEY': '144646879732624',
     'API_SECRET': 'jAdj2Wc2Qb6fmJfY9qJXdEMUYSw',
+    'API_PROXY': 'http://proxy.server:3128',
 }
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
