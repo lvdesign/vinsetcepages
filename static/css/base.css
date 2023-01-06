@@ -1,0 +1,183 @@
+body {
+    padding-top: 5rem;
+  }
+
+/* FONT - Typographie
+Oswald:wght@700&
+Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&
+Roboto:ital,wght@0,300;1,300&display
+font-family: 'Oswald', sans-serif
+font-family: 'Roboto', sans-serif;
+font-family: 'Playfair Display', serif;
+*/
+
+/* LAYOUT */
+
+
+.vin-template {
+    padding: 3rem 1.5rem;  
+  }
+
+
+.bg-white{
+  color:white;
+}
+
+.newH1{
+  font-size: 9.5rem;
+  line-height: .9;
+  color:white;
+  text-shadow: 2px 2px #000;
+}
+.Ital-Play-Font{
+ font-style: italic;
+ font-family: 'Playfair Display', serif;
+}
+
+.home-bg{
+  text-shadow: 1px 1px aliceblue;
+}
+
+/* 
+Fancy Wine Text 
+*/
+.fa-glass{
+  color:red;
+}
+
+.fond-blanc-bg,  
+#div_id_comment label{
+background-color: aliceblue;
+display:inline;
+}
+
+/* Effet textes & bandeaux */
+.fond-padding{
+  padding: .5em;  
+}
+.fond-title-padding {
+  padding: .5rem;
+  line-height: 1.5;
+  
+ }
+.fond-noir-bg{  
+  color:white;
+  background-color: black ;
+  display:inline;
+}
+.borderImage{
+  border:10px black solid;
+}
+
+
+.tag a, .category a {
+  color: white;
+  font-weight: 800;
+  }
+
+/* End Fancy Wine Text */
+
+
+@media (max-width: 575.98px) { 
+  .newH1{
+    font-size: 5rem;
+  }
+}
+
+/* si mot trop long -> coupe*/
+.overF{
+  overflow-wrap: break-word;
+}
+
+
+p {font-family: 'Roboto', sans-serif; font-weight: 400;}
+
+p strong { font-weight: bold;}
+  
+b {font-family: 'Oswald', sans-serif;font-weight: 700;}
+
+h1, h3, h5, h6, nav .navbar-brand {font-family: 'Playfair Display', serif; font-weight: 400; }
+
+h2 { font-family: 'Roboto', sans-serif; font-weight: 400;}
+
+/*commentaire*/
+h6 {font-size: 2rem;}
+
+/* txt description*/
+h4 {font-family: 'Playfair Display', serif; font-weight: 400; font-style: italic; line-height: 1.5;}
+
+
+/* New style*/  
+ul{
+    padding:0;
+  }
+ul > li {    
+    list-style: none;
+    text-decoration: none;
+}
+/* access */
+a.nav-link{  
+  text-decoration: none;
+  transition-property: text-decoration;
+  transition-duration: 0.5s;
+  transition-delay: 0.5s;
+  transition-timing-function: ease;
+}
+a.nav-link:hover{ 
+  color: rgb(145, 20, 20) !important;
+  text-decoration: underline;
+}
+
+/* Animation Logo*/
+.navbar-brand .my-logo{
+  width:30px;
+  height:30px;
+  transition: transform 0.2s ease-in-out;
+}
+.navbar-brand:hover .my-logo{
+  transform: rotate(-360deg);
+}
+
+.container a { color: rgb(145, 20, 20) !important;}
+
+
+
+/* HOME 
+anna-kaminova-ckjuMXBLu7o-unsplash
+https://stackoverflow.com/questions/39769469/the-way-to-use-background-image-in-css-files-with-django
+*/
+
+.backImage {
+  /*border:2px dotted green; 
+  padding: 2rem;*/
+  background-image: url("/static/img/anna-kaminova.jpg");  
+  background-size: cover;
+}
+
+   
+/* EFFET Fancy Images */
+  .myImages{      
+      -webkit-filter: grayscale(100%);
+      filter: grayscale(100%);
+      -webkit-transition: .3s ease-in-out;
+      transition: .3s ease-in-out;
+  }
+   .myImages:hover {
+      -webkit-filter: grayscale(0);
+      filter: grayscale(0);
+  }
+
+  
+/* Home page Rotator action */
+  #my_rotator {
+      width: auto;
+      height: 350px;	
+      
+      background-color: black;
+  }
+  #my_rotator figure {
+      display: none;
+      text-align: center;
+      margin: 1rem 0;
+      
+  }
