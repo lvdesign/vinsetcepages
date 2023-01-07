@@ -25,14 +25,23 @@
         <h2 class="Ital-Play-Font">Derniers vins…</h2>
         {% if images %}
         <div id="my_rotator" >
+         
             {% for vin in images %}
-            <figure>
-                <img src="https://res.cloudinary.com/lvcloud/image/upload/v1624885333/{{ vin.image }}" alt="{{ vin.title }}" class="myImages borderImage" height="300" />
+            <figure> 
+              {% if post.image %}    
+                <img src="{% url 'post_image' vin.id %}" alt="{{ vin.title }}" class="myImages borderImage" height="300" />
+              {% else %}
+              <picture class="img-effet"></picture>
+              {% endif %}
                 <figcaption class="figure-caption" ><b> <a href="{{ vin.get_absolute_url }}" >{{ vin.title }} </a></b></figcaption>
-            </figure>          
-        {% endfor %}
-        </div>
+            </figure> 
+            
+            
+          {% endfor %}
+         
+         </div>
         {% endif %}
+        
   </div>
       
   <div class="col-sm col-sm-3">

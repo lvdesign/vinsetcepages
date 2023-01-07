@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-%5$5u$gx$i@7=#z)r+c+awwk$m)d3c7n3og2-m#n2$lc=%&hut
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.pythonanywhere.com']
 
 INTERNAL_IPS = [
     # ...
@@ -37,7 +37,7 @@ SITE_ID = 1  # new for sitemap
 
 AUTH_USER_MODEL = 'accounts.CustomUser'  # new
 
-CRISPY_TEMPLATE_PACK = "bootstrap4" 
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 # Application definition
 
 
@@ -50,10 +50,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'django.contrib.humanize',
-    'cloudinary_storage',
+    
     # thirdparty
     "debug_toolbar",
-    'cloudinary',
     'crispy_forms',
 
     # apps
@@ -61,14 +60,6 @@ INSTALLED_APPS = [
     "pages",
     "vins",
 ]
-
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'lvcloud',
-    'API_KEY': '144646879732624',
-    'API_SECRET': 'jAdj2Wc2Qb6fmJfY9qJXdEMUYSw',
-    'API_PROXY': 'http://proxy.server:3128',
-}
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -150,7 +141,7 @@ STATIC_URL = "static/"
 
 STATICFILES_DIRS = [str(BASE_DIR.joinpath('static'))]  # os.path.join(BASE_DIR,'static')
 STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles'))  # new
-
+# STATIC_ROOT = BASE_DIR / 'static'   #  new
 MEDIA_URL = '/media/'
 MEDIA_ROOT = [str(BASE_DIR.joinpath('media'))]
 
@@ -162,14 +153,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_REDIRECT_URL = 'home'  # new
 LOGOUT_REDIRECT_URL = 'home'  # new
 
-# Django resize image
-DJANGORESIZED_DEFAULT_SIZE = [300, 300]
-DJANGORESIZED_DEFAULT_CROP = ['middle', 'center']
-DJANGORESIZED_DEFAULT_QUALITY = 75
-DJANGORESIZED_DEFAULT_KEEP_META = True
-DJANGORESIZED_DEFAULT_FORCE_FORMAT = 'PNG'
-DJANGORESIZED_DEFAULT_FORMAT_EXTENSIONS = {'PNG': ".png"}
-DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = True
+
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

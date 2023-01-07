@@ -18,5 +18,5 @@
     "display": "standalone",
     "dir": "ltr",
     "lang": "fr",
-    "start_url": "https://vinetcepage.herokuapp.com/"
+    "start_url": "https://vinetcepage.pythonanywhere.com"
 }

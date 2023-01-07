@@ -180,7 +180,7 @@ class Vin(models.Model):
 
     title, slug, description, price, boutique
 
-    image => cloudinary 
+    image => No cloudinary but blob
     '''
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='fav_vin_auteur')
     producteur = models.ForeignKey(to=Producteur, help_text='Selectionnez un producteur pour ce vin.', on_delete=models.CASCADE, related_name='producteurs', blank=True, null=True)
@@ -204,7 +204,10 @@ class Vin(models.Model):
 
     ''' image = models.ImageField(upload_to='vinslv/', null=True, blank=True)
     https://github.com/un1t/django-resized avec cloudinary media/vinslv/ '''
-    image = ResizedImageField(size=[300, 300], crop=['middle', 'center'], upload_to='vinslv/', null=True, blank=True)
+    # image = ResizedImageField(size=[300, 300], crop=['middle', 'center'], upload_to='vinslv/', null=True, blank=True)
+    image = models.BinaryField(null=True, blank=True, editable=True)
+    content_type = models.CharField(max_length=256, null=True, blank=True, 
+            help_text='The MIMEType of the file')
 
     class PriceChoice(models.TextChoices):
         MOINS_DE_10 = 'moins de 10'

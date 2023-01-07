@@ -6,7 +6,7 @@ https://res.cloudinary.com/lvcloud/image/upload/v1633592831/media/vinslv/basket_
 <div class="row">
     
     <div class="col-sm">
-    <img src="https://res.cloudinary.com/lvcloud/image/upload/v1624885333/{{ vin.image }}" alt="{{ vin.title }}" class="align-self-start mr-3 myImages borderImage"   width=300 />
+    <img src="{% url 'vins:post_image' vin.id %}" alt="{{ vin.title }}" class="align-self-start mr-3 myImages borderImage"   width=300 />
 
     </div>  
         
@@ -84,8 +84,8 @@ https://res.cloudinary.com/lvcloud/image/upload/v1633592831/media/vinslv/basket_
             <hr>
             <!-- auteur -->
             <p>
-                <a href="{% url 'vins:vin_edit' vin.slug %}">Edit</a> |
-                <a href="{% url 'vins:vin_delete' vin.slug %}">Delete</a>
+                <a href="{% url 'vins:vin_edit' vin.id %}">Edit</a> |
+                <a href="{% url 'vins:vin_delete' vin.id %}">Delete</a>
             </p>
             <hr>
             {% endif %}

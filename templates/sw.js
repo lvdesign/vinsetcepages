@@ -10,8 +10,6 @@ return cache.addAll([
   ]);
 });
 }
-
-{% load static %} 
 const staticAssets = [
 '{% static "css/base.css" %}',
 '{% static "js/main.js" %}',

@@ -2,7 +2,7 @@
 
 object_list -->
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}Liste des Vins{% endblock title %}
 
 {% block content %}
@@ -20,15 +20,21 @@ col-6 col-md-4-->
         
             <div class="card-body">                
                 <a href="{{ vin.get_absolute_url }}">
-                        <img src="https://res.cloudinary.com/lvcloud/image/upload/v1624885333/{{ vin.image }}" 
+                        {% if vin.image %}    
+                        <img src="{% url 'vins:post_image' vin.id %}" 
                         alt="{{ vin.title }}"
                         width=300 height=300           
                         class="myImages img-fluid mx-auto d-block borderImage"
-                        />       
+                        />
+                        {% else %}
+              <picture class="img-effet"></picture>
+              {% endif %}       
                         <h5 class="mt-0 fond-blanc-bg fond-title-padding">
                             {{ vin.title }} 
                         </h5>
                 </a>
+                <p>ID == {{ vin.id }} </p>
+                
                
                 <p></p>
                 <span class="fond-noir-bg fond-padding">
@@ -94,8 +100,8 @@ col-6 col-md-4-->
             <!-- auteur -->
             <hr>
             <p>
-                <a href="{% url 'vins:vin_edit' vin.slug %}">Edit</a> |
-                <a href="{% url 'vins:vin_delete' vin.slug %}">Delete</a>  
+                <a href="{% url 'vins:vin_edit' vin.id %}">Edit</a> |
+                <a href="{% url 'vins:vin_delete' vin.id %}">Delete</a>  
             </p>
             <hr>
             {% endif %}

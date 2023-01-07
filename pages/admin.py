@@ -15,6 +15,7 @@ class VinAdmin(admin.ModelAdmin):
     search_fields= ['title']
     fields = ('title', 'author','slug', 'description', 'price', 'boutique', 'tips', 'image', 'category', 'tag','score', 'producteur')
     prepopulated_fields = {'slug': ('title', )}
+    exclude = ( 'content_type',)
 
     inlines = [
         CommentInline,

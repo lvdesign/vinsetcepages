@@ -21,3 +21,4 @@ class AboutPageView(TemplateView):
 
 class OfflinePageView(TemplateView):
     template_name = 'offline.html'
+    

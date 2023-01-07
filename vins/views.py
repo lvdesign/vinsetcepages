@@ -1,24 +1,18 @@
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin  # new
-
 from django.shortcuts import render, redirect, get_object_or_404  # mail
-
 from django.views.generic.edit import DeleteView
-
 from vins.owner import OwnerListView, OwnerDetailView, OwnerCreateView, OwnerUpdateView, OwnerDeleteView
-
 from django.urls import reverse_lazy, reverse
-
-from vins.models import Vin, Comment, Fav, Category, Tag, Producteur
-from vins.forms import CommentForm
-
-
 # Search
 from django.http import HttpResponse
 from django.db.models import Q
 from django.contrib.humanize.templatetags.humanize import naturaltime
 
 
+from vins.models import Vin, Comment, Fav, Category, Tag, Producteur
+from vins.forms import CommentForm, VinForm
+from vinsetcepages.utils import dump_queries
 # Test query
 
 
@@ -63,62 +57,98 @@ class VinDetailView(OwnerDetailView): # new
     model = Vin
     template_name = 'vin_detail.html'
 
-    '''
-    def rate_image(request):
-        if request.method == 'POST':
-            el_id = request.POST.get('el_id')
-            val =request.POST.get('val')
-            obj = Vin.objects.get(id=el_id)
-            obj.score = val
-            obj.save()
-            return JsonResponse({'success':'true', 'score': val}, safe=False)
-        return JsonResponse({'success':'false'})
-    '''
-
-    # comment    
+    ''' Comment '''
     def get(self, request, slug=None) :
         x = Vin.objects.get(slug=slug)
-        print('x :::', x)       
+        print('x :::', x)
         comments = Comment.objects.filter(vin=x).order_by('-updated_at')
         comment_form = CommentForm()
         context = { 'vin' : x, 'comments': comments, 'comment_form': comment_form }
         return render(request, self.template_name, context)
-    
 
 '''
 CRUD section des vins
 LoginRequiredMixin pour Creta, Update, Delete
 UserPassesTestMixin pour limiter user to Update et Delete
 '''
-class VinCreateView( OwnerCreateView): 
+
+class VinCreateView(OwnerCreateView): 
     ''' Creer/editer vins: 
-    'title','slug','description','price','boutique','tips','image','category','tag','score', producteur '''    
+    'title','slug','description','price','boutique','tips','image','category','tag','score', producteur    
     model = Vin
     template_name = 'vin_new.html'   
     fields = 'title','slug','description','price','boutique','tips','image','category','tag','score', 'producteur' #'__all__'  
     success_url = reverse_lazy('vins:vin_list')
-    
-
     def form_valid(self, form): # new
         form.instance.author = self.request.user
         return super().form_valid(form)
+    '''
 
+    model = Vin
+    template_name = 'vin_new.html'
+    success_url = reverse_lazy('vins:vin_list')
+
+    def get(self, request, pk=None):
+        form = VinForm()
+        ctx = {'form': form}
+        return render(request, self.template_name, ctx)
+
+    def post(self, request, pk=None):
+        form = VinForm(request.POST, request.FILES or None)
+        # ajouter d'abord les tags ??
+        if not form.is_valid():
+            ctx = {'form': form}
+            return render(request, self.template_name, ctx)
+        
+        # Add owner to the model before saving
+        post = form.save(commit=False)
+        post.author = self.request.user
+        post.save()
+        # save m2m
+        form.save_m2m() 
+        dump_queries()
+        return redirect(self.success_url)
 
 
 class VinUpdateView(OwnerUpdateView): # new
-    ''' Update vins '''
+    ''' Update vins
     model = Vin
-    fields = 'title','slug','description','price','boutique','tips','image','category','tag','score', 'producteur',
+    fields = 'title','slug','description','price',
+    'boutique','tips','image','category','tag','score', 'producteur',
     template_name = 'vin_edit.html'
     success_url = reverse_lazy('vins:vin_list')
 
     def test_func(self): # new
         obj = self.get_object()
         return obj.author == self.request.user
+    '''
+    model = Vin
+    template_name = 'vin_edit.html'
+    success_url = reverse_lazy('vins:vin_list')
+
+    def get(self, request, pk):
+        post_vin = get_object_or_404(Vin, id=pk,  author=self.request.user)
+        form = VinForm(instance=post_vin)
+        ctx = {'form': form}
+        return render(request, self.template_name, ctx)
+
+    # , slug=None  id=pk, slug=pk,
+    def post(self, request, pk=None):
+        post_vin = get_object_or_404(Vin, id=pk, author=self.request.user)
+        form = VinForm(request.POST, request.FILES or None, instance=post_vin)
+
+        if not form.is_valid():
+            ctx = {'form': form}
+            return render(request, self.template_name, ctx)
+
+        post_vin = form.save(commit=False)
+        post_vin.save()
+        dump_queries()
+        return redirect(self.success_url)
 
 
 
-class VinDeleteView(DeleteView): # new
+class VinDeleteView(OwnerDeleteView): # new
     ''' Delete vins '''
     model = Vin
     template_name = 'vin_delete.html'
@@ -127,6 +157,15 @@ class VinDeleteView(DeleteView): # new
     def test_func(self): # new
         obj = self.get_object()
         return obj.author == self.request.user
+
+
+def stream_file(request, pk) :
+    pic = get_object_or_404(Vin, id=pk)
+    response = HttpResponse()
+    response['Content-Type'] = pic.content_type
+    response['Content-Length'] = len(pic.image)
+    response.write(pic.image)
+    return response
 
 
 # Producteur
@@ -139,6 +178,7 @@ class ProducteurListView(OwnerListView):
     def get_queryset(self):
         context_data = Producteur.objects.all()
         return context_data
+
 
 # Category -> region
 class CategoryListView(OwnerListView):
@@ -171,7 +211,6 @@ class CategoryDetailView(OwnerDetailView):
         return Category.objects.all()
 
 
-
 # Tag -> Cepages
 class TagListView(OwnerListView):
     ''' Tag/Cepage liste '''
@@ -198,16 +237,16 @@ class TagDetailView(OwnerDetailView):
         return Tag.objects.all()
 
 
-
 # COMMENTS
 class CommentCreateView(LoginRequiredMixin, View):
 
-    def post(self, request, slug=None) :
+    def post(self, request, slug=None):
         f = get_object_or_404(Vin, slug=slug)
         print('f :::',f)
         comment = Comment(text=request.POST['comment'], author=request.user, vin=f)
         comment.save()
         return redirect(reverse('vins:vin_detail', args=[slug]))
+
 
 class CommentDeleteView(OwnerDeleteView):
     model = Comment
